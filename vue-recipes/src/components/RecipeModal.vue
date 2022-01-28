@@ -77,7 +77,7 @@ export default {
           });
       } else {
         axios
-          .patch("/api/recipe-edit/" + this.recipe.id, payload)
+          .patch("/api/recipe-edit/" + this.recipe.recipe.id, payload)
           .then((response) => {
             if (response.data.ok) {
               console.log("successss editing");
@@ -103,6 +103,7 @@ export default {
 
   mounted() {
     console.log("mounted modal");
+    console.log(this.recipe)
     if (this.edit) {
       this.name = this.recipe.name;
     }

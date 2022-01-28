@@ -143,7 +143,6 @@ export default {
       }
       if (props.recipe) {
         var r = props.recipe;
-        console.log("RRRR", r);
       }
       this.$buefy.modal.open({
         component: RecipeModal,
