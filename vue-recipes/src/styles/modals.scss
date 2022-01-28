@@ -1,0 +1,90 @@
+
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 200;
+  }
+  .modal-container {
+    background-color: #ffffff;
+    position: relative;
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 12px;
+    height: 300px;
+  
+    &.modal-ingredients {
+      height: 460px;
+    }
+    &.modal-recipe {
+      height: 230px;
+    }
+    &.modal-recipeDetail {
+        height: 460px;
+    }
+  }
+  
+  .modal-header {
+    color: #1c344c !important;
+    font-weight: 600 !important;
+    font-size: 18px !important;
+    line-height: 25px;
+    display: flex;
+    border-bottom: 1px solid #dddddd;
+    padding: 15px;
+    justify-content: space-between;
+  }
+  
+  .fields-container {
+    padding: 20px 20px 0px;
+    align-items: center;
+    display: grid;
+  }
+  
+  .input-container {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .select-dropdown{
+    margin-bottom: 10px;
+  }
+  
+  .modal-label {
+    font-size: 13px;
+    margin-bottom: 5px;
+  }
+  
+  .modal-input {
+    margin-top: 2px;
+    margin-bottom: 10px;
+    font-size: 11px;
+    padding: 10px;
+  }
+  
+  .modal-button {
+    padding: 10px;
+    background-color: #1c344c;
+    color: white;
+    font-weight: 600;
+    border: none;
+  }
+  
+  .disabled {
+    background-color: #bababa;
+  }
+  
+  .modal-footer {
+    padding: 20px;
+    display: flex;
+    justify-content: flex-end;
+    position: absolute;
+    bottom: 0px;
+    right: 0;
+  }
