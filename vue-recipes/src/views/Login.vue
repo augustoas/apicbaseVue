@@ -74,13 +74,12 @@ export default {
     margin-bottom: 30px;
   }
 
-  .login-container{
+  .login-container {
     padding: 20px;
     border: 1px solid;
   }
 
   .text-button-container {
-
   }
 
   .text-button-container {
@@ -109,8 +108,8 @@ export default {
       &::placeholder {
         color: #c4c0c0ab;
       }
+    }
   }
-}
 
   .action-button {
     padding: 10px;

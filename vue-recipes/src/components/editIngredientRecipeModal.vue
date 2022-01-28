@@ -3,14 +3,15 @@
     <div class="modal-backdrop">
       <div class="modal-container modal-recipe">
         <header class="modal-header" id="modalTitle">
-          <p >Edit Recipe Ingredient</p>
+          <p>Edit Recipe Ingredient</p>
           <span class="action-button" @click="close()">
             <b-icon pack="fas" icon="times" size="is-small"> </b-icon
           ></span>
         </header>
         <div class="fields-container">
           <div class="input-container">
-            <label class="modal-label">Ingredient: {{ingrec.ingredient.name}}</label
+            <label class="modal-label"
+              >Ingredient: {{ ingrec.ingredient.name }}</label
             ><input class="modal-input" type="text" v-model="amount" />
           </div>
         </div>
@@ -54,16 +55,16 @@ export default {
       const payload = {
         r_amount: this.amount,
       };
-    axios
-        .patch("/api/ingredient-recipe-edit/"+this.ingrec.id, payload)
+      axios
+        .patch("/api/ingredient-recipe-edit/" + this.ingrec.id, payload)
         .then((response) => {
-        if (response.data.ok) {
+          if (response.data.ok) {
             console.log("successss editing");
-        }
+          }
         })
         .catch((error) => {
-        //MANEJO ERROR DE LOGIN
-        console.log(error);
+          //MANEJO ERROR DE LOGIN
+          console.log(error);
         });
       this.$emit("close");
       window.location.reload();
@@ -72,8 +73,8 @@ export default {
 
   mounted() {
     console.log("mounted modal");
-    console.log(this.ingrec)
-    this.amount = this.ingrec.r_amount
+    console.log(this.ingrec);
+    this.amount = this.ingrec.r_amount;
   },
 };
 </script>

@@ -12,8 +12,8 @@
       <!-- NOT AUTH ROUTES-->
       <div class="route" v-if="!isAuth">
         <span class="route-text" v-on:click="changeRoute('Login')"
-          >{{ "Login" }} </span
-        >
+          >{{ "Login" }}
+        </span>
       </div>
       <div class="route" v-if="!isAuth">
         <span class="route-text" v-on:click="changeRoute('Register')"
@@ -24,13 +24,13 @@
       <!-- AUTH ROUTES -->
       <div class="route" v-if="isAuth">
         <span class="route-text" v-on:click="changeRoute('Recipes')"
-          >{{ "Recipes" }} </span
-        >
+          >{{ "Recipes" }}
+        </span>
       </div>
       <div class="route" v-if="isAuth">
         <span class="route-text" v-on:click="changeRoute('Ingredients')"
-          >{{ "Ingredients" }} </span
-        >
+          >{{ "Ingredients" }}
+        </span>
       </div>
     </div>
   </div>
@@ -111,15 +111,12 @@ export default {
   div.sidebar-header {
     display: flex;
     padding-top: 25px;
-
   }
 
   .section-container {
     padding: 30px 0px;
     margin: 0px 25px;
     border-bottom: 1px solid #dddddd;
-
-
   }
 
   .section-title {

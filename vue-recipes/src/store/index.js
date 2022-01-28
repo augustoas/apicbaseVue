@@ -47,17 +47,14 @@ export default new Vuex.Store({
       console.log("in setIngredientsRecipes STORE");
       state.ingrec = ingrec;
       this.$eventBus.$emit("updateIngRec", state.ingrec);
-      
     },
     updateIngredientsRecipes(state, payload) {
-      console.log(payload, 'PAYLOAD')
+      console.log(payload, "PAYLOAD");
       console.log("in setIngredientsRecipes STORE");
-      const item = state.ingrec.find(item => item.id === payload.id);
+      const item = state.ingrec.find((item) => item.id === payload.id);
       Object.assign(item, payload);
       this.$eventBus.$emit("updateIngRec", state.ingrec);
-      
     },
-
   },
   actions: {},
   modules: {},

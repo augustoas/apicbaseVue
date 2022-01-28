@@ -127,7 +127,7 @@ export default {
         .delete("/api/recipe-delete/" + r.recipe.id)
         .then((response) => {
           console.log(response);
-          console.log('r', r)
+          console.log("r", r);
           const index = this.recipes.indexOf(r);
           this.recipes.splice(index, 1);
           this.$store.commit("setRecipes", this.recipes);
@@ -168,7 +168,7 @@ export default {
         parent: this,
         props: {
           ingrec: ingrec[0],
-          ingrecs: this.ingrec
+          ingrecs: this.ingrec,
         },
       });
     },
@@ -189,23 +189,23 @@ export default {
       var ingrec = this.ingrec.filter((obj) => {
         return obj.id === recipe.ingredient.ingrec_id;
       });
-      console.log(ingrec[0])
+      console.log(ingrec[0]);
       axios
         .delete("/api/ingredient-recipe-delete/" + ingrec[0].id)
         .then((response) => {
-          if(response.data['ok']) {
+          if (response.data["ok"]) {
             //const index = this.ingrec.indexOf(ingrec[0].id);
             //this.ingrec.splice(index, 1);
             //FILTER ITEM IN RECIPES AND INGREDiENTS TO DELETE
             this.$store.commit("updateIngredientsRecipes", ingrec[0]);
-            console.log(response.data)
+            console.log(response.data);
           }
         })
         .catch((error) => {
           //MANEJO ERROR DE LOGIN
           console.log(error);
         });
-        window.location.reload();
+      window.location.reload();
     },
 
     RecipeDetail(r) {
@@ -221,16 +221,16 @@ export default {
 
     updateIngRec(params) {
       console.log("update ingrec en Recipes");
-      console.log('params', params)
+      console.log("params", params);
       this.$store.commit("setIngredientsRecipes", params);
     },
   },
 
   created() {
-    this.$eventBus.$on("updateIngRec", (params) =>{
-        console.log('llego a evento ')
-        this.updateIngRec(params)
-    })  
+    this.$eventBus.$on("updateIngRec", (params) => {
+      console.log("llego a evento ");
+      this.updateIngRec(params);
+    });
   },
 
   mounted() {

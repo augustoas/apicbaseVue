@@ -93,10 +93,9 @@ export default {
         .post("/api/new-recipe-ingredient", payload)
         .then((response) => {
           if (response.data.ok) {
-            console.log('RESPONSE DATA', response.data)
+            console.log("RESPONSE DATA", response.data);
             this.ingrec.push(response.data.ingrec);
             this.$store.commit("setIngredientsRecipes", this.ingrec);
-            
           }
         })
         .catch((error) => {
