@@ -103,7 +103,7 @@ export default {
 
   mounted() {
     console.log("mounted modal");
-    console.log(this.recipe)
+    console.log(this.recipe);
     if (this.edit) {
       this.name = this.recipe.name;
     }
