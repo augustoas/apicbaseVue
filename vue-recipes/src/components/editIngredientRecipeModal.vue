@@ -20,7 +20,7 @@
             class="modal-button"
             :class="{ 'modal-button': true, disabled: amount.length < 1 }"
             type="button"
-            :disabled="amount.length < 1"
+            :disabled="amount.length < 1 || amount < 0"
             @click="saveIngredient()"
           >
             {{ "Confirm" }}

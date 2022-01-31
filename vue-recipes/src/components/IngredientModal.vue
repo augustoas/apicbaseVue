@@ -75,9 +75,12 @@ export default {
       if (
         this.name.length < 1 ||
         this.amount.length < 1 ||
+        this.amount < 0 ||
         this.cost.length < 1 ||
+        this.cost < 0 ||
         this.unitSelected.length < 1 ||
-        this.articleNumber.length < 1
+        this.articleNumber.length < 1 ||
+        this.articleNumber < 0
       )
         return true;
       return false;

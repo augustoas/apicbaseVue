@@ -23,7 +23,7 @@ export default new Vuex.Store({
     },
 
     setToken(state, token) {
-      console.log("en set tokennnn ");
+      console.log("en set token ");
       state.token = token;
       state.isAuthenticated = true;
     },
@@ -49,8 +49,7 @@ export default new Vuex.Store({
       this.$eventBus.$emit("updateIngRec", state.ingrec);
     },
     updateIngredientsRecipes(state, payload) {
-      console.log(payload, "PAYLOAD");
-      console.log("in setIngredientsRecipes STORE");
+      console.log("in update ingrec STORE");
       const item = state.ingrec.find((item) => item.id === payload.id);
       Object.assign(item, payload);
       this.$eventBus.$emit("updateIngRec", state.ingrec);

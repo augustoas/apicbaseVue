@@ -7,7 +7,7 @@
     </div>
 
     <div class="section-container">
-      <h1 class="section-title">{{ "OPCIONES" }}</h1>
+      <h1 class="section-title">OPTIONS</h1>
 
       <!-- NOT AUTH ROUTES-->
       <div class="route" v-if="!isAuth">

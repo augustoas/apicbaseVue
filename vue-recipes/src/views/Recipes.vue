@@ -219,8 +219,6 @@ export default {
     },
 
     updateIngRec(params) {
-      console.log("update ingrec en Recipes");
-      console.log("params", params);
       this.$store.commit("setIngredientsRecipes", params);
     },
   },
@@ -234,7 +232,7 @@ export default {
 
   mounted() {
     console.log("RECIPES MOUNTED");
-    //HACER EL AXIOS DESDE STORE O DESDE AQUÍ
+
     axios
       .get("/api/recipe-list")
       .then((response) => {
@@ -298,7 +296,6 @@ export default {
         background-color: #1c344c;
         width: 200px;
         border: 0px solid;
-        /* border-radius: 25px; */
         font-size: 16px;
         font-weight: 600;
         color: white;
@@ -335,7 +332,7 @@ export default {
         width: 100%;
         margin: 10px 0px;
         flex-direction: column;
-        min-width: 190px;
+        min-width: 150px;
         height: 175px;
         position: relative;
 

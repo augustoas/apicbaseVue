@@ -33,7 +33,7 @@
             class="modal-button"
             :class="{
               'modal-button': true,
-              disabled: !selectedItem || amount.length < 1,
+              disabled: !selectedItem || amount.length < 1 || amount < 0,
             }"
             type="button"
             @click="addIngredient()"

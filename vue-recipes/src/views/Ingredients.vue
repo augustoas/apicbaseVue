@@ -187,7 +187,7 @@ export default {
         margin: 10px 0px;
         flex-direction: column;
         align-items: center;
-        min-width: 190px;
+        min-width: 150px;
 
         .item-title {
           font-size: 18px;
