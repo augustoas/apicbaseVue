@@ -10,7 +10,6 @@
       </div>
     </div>
     <h2>ApicBase assignment</h2>
-
   </div>
 </template>
 <script>
@@ -32,7 +31,7 @@ export default {
     changeRoute(nombre) {
       this.$router.push({ name: nombre });
     },
-  }
+  },
 };
 </script>
 
@@ -57,16 +56,15 @@ export default {
   }
 
   .action-button {
-      padding: 10px;
-      background-color: #1c344c;
-      width: 200px;
-      border: 0px solid;
-      font-size: 16px;
-      font-weight: 600;
-      color: white;
-      cursor: pointer;
-      margin: 10px;
-      
+    padding: 10px;
+    background-color: #1c344c;
+    width: 200px;
+    border: 0px solid;
+    font-size: 16px;
+    font-weight: 600;
+    color: white;
+    cursor: pointer;
+    margin: 10px;
   }
 }
 </style>

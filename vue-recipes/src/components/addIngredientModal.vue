@@ -53,6 +53,7 @@ export default {
   name: "addIngredientModal",
   props: {
     recipe: { type: Object, required: true },
+    recipes: { type: Array, required: true },
   },
 
   data() {
@@ -69,6 +70,9 @@ export default {
     ingrec() {
       return this.$store.state.ingrec;
     },
+    recipeList() {
+      return this.$store.state.recipeList;
+    },
   },
 
   methods: {
@@ -82,20 +86,21 @@ export default {
     },
 
     addIngredient() {
-      console.log("saveIngredient");
-
       const payload = {
         ingredient: this.selectedItem.id,
-        recipe: this.recipe.recipe.id,
+        recipe: this.recipe.id,
         r_amount: this.amount,
       };
+
       axios
         .post("/api/new-recipe-ingredient", payload)
         .then((response) => {
           if (response.data.ok) {
-            console.log("RESPONSE DATA", response.data);
-            this.ingrec.push(response.data.ingrec);
-            this.$store.commit("setIngredientsRecipes", this.ingrec);
+            this.selectedItem.r_amount = this.amount;
+            this.recipe.ingredients.push(this.selectedItem);
+            this.$store.commit("addIngredientsRecipes", this.ingrec);
+            console.log("this.recipeeee", this.recipe);
+            this.$store.commit("updateRecipe", this.recipe);
           }
         })
         .catch((error) => {
@@ -109,7 +114,6 @@ export default {
 
   mounted() {
     console.log("mounted modal add ingredients");
-    console.log("recipe", this.recipe);
   },
 };
 </script>

@@ -68,19 +68,16 @@ export default {
         axios
           .post("/api/recipe-new", payload)
           .then((response) => {
-            this.recipes.push(response.data.recipe);
-            this.$store.commit("setRecipes", this.recipes);
+            this.$store.commit("addRecipe", response.data.recipe);
           })
           .catch((error) => {
-            //MANEJO ERROR DE LOGIN
             console.log(error);
           });
       } else {
         axios
-          .patch("/api/recipe-edit/" + this.recipe.recipe.id, payload)
+          .patch("/api/recipe-edit/" + this.recipe.id, payload)
           .then((response) => {
             if (response.data.ok) {
-              console.log("successss editing");
               payload["id"] = this.recipe.id;
               const index = this.recipes.indexOf(this.recipe);
               this.recipes.splice(index, 1);
@@ -89,7 +86,6 @@ export default {
             this.$store.commit("setRecipes", this.recipes);
           })
           .catch((error) => {
-            //MANEJO ERROR DE LOGIN
             console.log(error);
           });
       }
@@ -102,7 +98,7 @@ export default {
   },
 
   mounted() {
-    console.log("mounted modal");
+    console.log("mounted recipe modal");
     console.log(this.recipe);
     if (this.edit) {
       this.name = this.recipe.name;

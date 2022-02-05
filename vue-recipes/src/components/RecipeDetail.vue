@@ -18,7 +18,7 @@
           >
             <div class="list-fields-container">
               <span>{{ ing.name }}</span>
-              <span>{{ ing.r_amount }} {{ ing.unit }}</span>
+              <span>{{ calculateAmount(ing, recipe) }} {{ ing.unit }}</span>
               <span>{{ ingredientCost(ing) }} EURO</span>
             </div>
           </div>
@@ -61,12 +61,16 @@ export default {
       this.$emit("close");
     },
     ingredientCost(ing) {
-      var ingredient = this.recipe.ingredients.filter((obj) => {
-        return obj.id === ing.id;
-      });
-      var cost =
-        (ingredient[0].r_amount * ingredient[0].cost) / ingredient[0].amount;
+      var ingAmount = this.calculateAmount(ing, this.recipe);
+      var cost = (ingAmount * ing.cost) / ing.amount;
       return Math.round(cost * 100) / 100;
+    },
+
+    calculateAmount: function (i, r) {
+      var ingrec = this.ingrec.find(
+        (x) => x.ingredient.id === i.id && x.recipe.id === r.id
+      );
+      return ingrec.r_amount;
     },
     recipeCost() {
       console.log("recipeCost");

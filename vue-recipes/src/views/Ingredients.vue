@@ -75,14 +75,12 @@ export default {
       axios
         .delete("/api/ingredient-delete/" + ing.id)
         .then((response) => {
-          //REMOVE ITEM BY ID
           console.log(response);
           const index = this.ingredients.indexOf(ing);
           this.ingredients.splice(index, 1);
           this.$store.commit("setIngredients", this.ingredients);
         })
         .catch((error) => {
-          //MANEJO ERROR DE LOGIN
           console.log(error);
         });
     },
@@ -108,7 +106,6 @@ export default {
 
   mounted() {
     console.log("INGREDIENTS MOUNTED");
-    //HACER EL AXIOS DESDE STORE O DESDE AQUÍ
     axios
       .get("/api/ingredient-list")
       .then((response) => {
@@ -116,7 +113,6 @@ export default {
         this.$store.commit("setIngredients", ingredients);
       })
       .catch((error) => {
-        //MANEJO ERROR DE LOGIN
         console.log(error);
       });
   },
@@ -149,7 +145,6 @@ export default {
         background-color: #1c344c;
         width: 200px;
         border: 0px solid;
-        /* border-radius: 25px; */
         font-size: 16px;
         font-weight: 600;
         color: white;
@@ -167,11 +162,11 @@ export default {
       margin: 3px;
       padding: 5px;
       display: flex;
-      justify-content: space-evenly;
+      justify-content: center;
       flex-wrap: wrap;
 
       .table-rows {
-        margin-top: 25px;
+        margin: 10px;
         padding: 5px;
         background: white;
         border: 0px solid;
@@ -187,7 +182,7 @@ export default {
         margin: 10px 0px;
         flex-direction: column;
         align-items: center;
-        min-width: 150px;
+        min-width: 250px;
 
         .item-title {
           font-size: 18px;

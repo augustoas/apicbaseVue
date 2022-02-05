@@ -131,7 +131,6 @@ export default {
             console.log(error);
           });
       }
-      //window.location.reload()
       this.$emit("close");
     },
   },

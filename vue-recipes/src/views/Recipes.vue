@@ -3,7 +3,8 @@
     <div class="recipes-container">
       <h1>Recipes</h1>
       <h2>
-        Here you can make your favorite recipes with your favourites ingredients
+        Here you can create your favorite recipes with your favorite
+        ingredients.
       </h2>
 
       <div class="header">
@@ -23,13 +24,16 @@
 
             <div class="item-info">
               <div class="ingredients">
+                <div class="no-ingredients" v-if="r.ingredients.length < 1">
+                  0 ingredients added
+                </div>
                 <div
                   class="ingredients-list"
                   v-for="i in r.ingredients"
                   v-bind:key="i.id"
                 >
                   <span>{{ i.name }}</span>
-                  <span> {{ i.r_amount }} {{ i.unit }}</span>
+                  <span> {{ calculateAmount(i, r) }} {{ i.unit }}</span>
                   <span
                     class="action-button"
                     @click="showItemModal({ edit: true, ingredient: i })"
@@ -37,7 +41,9 @@
                   ></span>
                   <span
                     class="action-button"
-                    @click="deleteIngredientFromRecipe({ ingredient: i })"
+                    @click="
+                      deleteIngredientFromRecipe({ ingredient: i, recipe: r })
+                    "
                     ><b-icon pack="fas" icon="trash" size="is-small"> </b-icon
                   ></span>
                 </div>
@@ -57,7 +63,7 @@
                 ><b-icon pack="fas" icon="plus" size="is-small"> </b-icon
               ></span>
             </div>
-            <span class="details-button" @click="RecipeDetail(r)"
+            <span class="details-button" @click="recipeDetail(r)"
               >View Detail</span
             >
           </div>
@@ -87,56 +93,30 @@ export default {
       return this.$store.state.recipes;
     },
     filteredRecipes() {
-      return this.recipesList.filter((recipe) => {
+      return this.recipes.filter((recipe) => {
         return recipe.name.match(this.search);
       });
     },
     ingrec() {
       return this.$store.state.ingrec;
     },
-    recipesList() {
-      var auxRecipes = [];
-      for (var r in this.recipes) {
-        var aux = {};
-        aux["recipe"] = this.recipes[r];
-        aux["name"] = this.recipes[r].name;
-        aux["ingredients"] = [];
-        for (var ir in this.ingrec) {
-          if (this.recipes[r].id === this.ingrec[ir].recipe.id) {
-            var ingAux = {
-              id: this.ingrec[ir].ingredient.id,
-              ingrec_id: this.ingrec[ir].id,
-              name: this.ingrec[ir].ingredient.name,
-              unit: this.ingrec[ir].ingredient.unit,
-              cost: this.ingrec[ir].ingredient.cost,
-              amount: this.ingrec[ir].ingredient.amount,
-              r_amount: this.ingrec[ir].r_amount,
-            };
-            aux["ingredients"].push(ingAux);
-          }
-        }
-        auxRecipes.push(aux);
-      }
-      return auxRecipes;
-    },
   },
 
   methods: {
     deleteRecipe(r) {
       axios
-        .delete("/api/recipe-delete/" + r.recipe.id)
+        .delete("/api/recipe-delete/" + r.id)
         .then((response) => {
           console.log(response);
-          console.log("r", r);
           const index = this.recipes.indexOf(r);
           this.recipes.splice(index, 1);
           this.$store.commit("setRecipes", this.recipes);
         })
         .catch((error) => {
-          //MANEJO ERROR DE LOGIN
           console.log(error);
         });
     },
+
     showRecipeModal(props) {
       if (props && props.edit) {
         var edit = props.edit;
@@ -155,6 +135,7 @@ export default {
         },
       });
     },
+
     showItemModal(recipe) {
       console.log("updating ingredient", recipe);
       var ingrec = this.ingrec.filter((obj) => {
@@ -181,33 +162,49 @@ export default {
         parent: this,
         props: {
           recipe: r,
+          recipes: this.recipes,
         },
       });
     },
-    deleteIngredientFromRecipe(recipe) {
-      var ingrec = this.ingrec.filter((obj) => {
-        return obj.id === recipe.ingredient.ingrec_id;
-      });
-      console.log(ingrec[0]);
+    deleteIngredientFromRecipe(data) {
+      console.log("data", data);
+
+      var ingrec = this.ingrec.find(
+        (x) =>
+          x.ingredient.id === data.ingredient.id &&
+          x.recipe.id === data.recipe.id
+      );
+
+      console.log("ingrec", ingrec);
+
       axios
-        .delete("/api/ingredient-recipe-delete/" + ingrec[0].id)
+        .delete("/api/ingredient-recipe-delete/" + ingrec.id)
         .then((response) => {
           if (response.data["ok"]) {
-            //const index = this.ingrec.indexOf(ingrec[0].id);
-            //this.ingrec.splice(index, 1);
-            //FILTER ITEM IN RECIPES AND INGREDiENTS TO DELETE
-            this.$store.commit("updateIngredientsRecipes", ingrec[0]);
             console.log(response.data);
+
+            const index = this.ingrec.indexOf(ingrec);
+            this.ingrec.splice(index, 1);
+            const index2 = data.recipe.ingredients.indexOf(data.ingredient);
+            data.recipe.ingredients.splice(index2, 1);
+
+            this.$store.commit("setIngredientsRecipes", this.ingrec);
+            this.$store.commit("setRecipes", this.recipes);
           }
         })
         .catch((error) => {
-          //MANEJO ERROR DE LOGIN
           console.log(error);
         });
-      window.location.reload();
     },
 
-    RecipeDetail(r) {
+    calculateAmount: function (i, r) {
+      var ingrec = this.ingrec.find(
+        (x) => x.ingredient.id === i.id && x.recipe.id === r.id
+      );
+      return ingrec.r_amount;
+    },
+
+    recipeDetail(r) {
       this.$buefy.modal.open({
         component: RecipeDetail,
         active: true,
@@ -217,22 +214,10 @@ export default {
         },
       });
     },
-
-    updateIngRec(params) {
-      this.$store.commit("setIngredientsRecipes", params);
-    },
-  },
-
-  created() {
-    this.$eventBus.$on("updateIngRec", (params) => {
-      console.log("llego a evento ");
-      this.updateIngRec(params);
-    });
   },
 
   mounted() {
     console.log("RECIPES MOUNTED");
-
     axios
       .get("/api/recipe-list")
       .then((response) => {
@@ -240,7 +225,6 @@ export default {
         this.$store.commit("setRecipes", recipes);
       })
       .catch((error) => {
-        //MANEJO ERROR DE LOGIN
         console.log(error);
       });
 
@@ -251,7 +235,6 @@ export default {
         this.$store.commit("setIngredients", ingredients);
       })
       .catch((error) => {
-        //MANEJO ERROR DE LOGIN
         console.log(error);
       });
 
@@ -263,7 +246,6 @@ export default {
         this.$store.commit("setIngredientsRecipes", ingrec);
       })
       .catch((error) => {
-        //MANEJO ERROR DE LOGIN
         console.log(error);
       });
   },
@@ -313,11 +295,11 @@ export default {
       margin: 5px;
       padding: 5px;
       display: flex;
-      justify-content: space-evenly;
+      justify-content: center;
       flex-wrap: wrap;
 
       .table-rows {
-        margin-top: 25px;
+        margin: 10px;
         padding: 5px;
         background: white;
         border: 0px solid;
@@ -332,7 +314,7 @@ export default {
         width: 100%;
         margin: 10px 0px;
         flex-direction: column;
-        min-width: 150px;
+        min-width: 250px;
         height: 175px;
         position: relative;
 
@@ -383,6 +365,11 @@ export default {
             font-size: 14px;
             align-items: center;
           }
+
+          .no-ingredients {
+            margin-top: 20px;
+            font-size: 12px;
+          }
         }
       }
 
@@ -400,7 +387,7 @@ export default {
         font-size: 12px;
         position: absolute;
         bottom: -10px;
-        margin-left: 60px;
+        right: 100px;
       }
     }
   }

@@ -10,6 +10,7 @@ export default new Vuex.Store({
     ingredients: [],
     recipes: [],
     ingrec: [],
+    recipeList: [],
   },
   mutations: {
     initStore(state) {
@@ -33,26 +34,34 @@ export default new Vuex.Store({
       state.isAuthenticated = false;
     },
 
+    //INGREDIENTS
     setIngredients(state, ingredients) {
       console.log("in setIngredients STORE");
       state.ingredients = ingredients;
     },
 
+    addIngredient(state, ingredient) {
+      state.ingredients.push(ingredient);
+    },
+
+    //RECIPES
     setRecipes(state, recipes) {
       console.log("in setRecipes STORE");
       state.recipes = recipes;
     },
-
-    setIngredientsRecipes(state, ingrec) {
-      console.log("in setIngredientsRecipes STORE");
-      state.ingrec = ingrec;
-      this.$eventBus.$emit("updateIngRec", state.ingrec);
+    addRecipe(state, recipe) {
+      state.recipes.push(recipe);
     },
-    updateIngredientsRecipes(state, payload) {
-      console.log("in update ingrec STORE");
-      const item = state.ingrec.find((item) => item.id === payload.id);
-      Object.assign(item, payload);
-      this.$eventBus.$emit("updateIngRec", state.ingrec);
+    updateRecipe(state, recipe) {
+      const index = state.recipes.indexOf(recipe.id);
+      state.recipes.splice(index, 1);
+      state.recipes.push(recipe);
+    },
+    setIngredientsRecipes(state, ingrec) {
+      state.ingrec = ingrec;
+    },
+    addIngredientsRecipes(state, ingrec) {
+      state.ingrec.push(ingrec);
     },
   },
   actions: {},
