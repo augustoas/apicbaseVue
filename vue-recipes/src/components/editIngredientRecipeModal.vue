@@ -59,21 +59,18 @@ export default {
         .patch("/api/ingredient-recipe-edit/" + this.ingrec.id, payload)
         .then((response) => {
           if (response.data.ok) {
-            console.log("successss editing");
+            this.ingrec.r_amount = this.amount;
+            this.$store.commit("updateIngredientRecipe", this.ingrec);
           }
         })
         .catch((error) => {
-          //MANEJO ERROR DE LOGIN
           console.log(error);
         });
       this.$emit("close");
-      window.location.reload();
     },
   },
 
   mounted() {
-    console.log("mounted modal");
-    console.log(this.ingrec);
     this.amount = this.ingrec.r_amount;
   },
 };

@@ -36,7 +36,9 @@
                   <span> {{ calculateAmount(i, r) }} {{ i.unit }}</span>
                   <span
                     class="action-button"
-                    @click="showItemModal({ edit: true, ingredient: i })"
+                    @click="
+                      showItemModal({ edit: true, ingredient: i, recipe: r })
+                    "
                     ><b-icon pack="fas" icon="edit" size="is-small"> </b-icon
                   ></span>
                   <span
@@ -136,18 +138,22 @@ export default {
       });
     },
 
-    showItemModal(recipe) {
-      console.log("updating ingredient", recipe);
-      var ingrec = this.ingrec.filter((obj) => {
-        return obj.id === recipe.ingredient.ingrec_id;
-      });
+    showItemModal(data) {
+      console.log("updating ingredient", data);
+      var ingrec = this.ingrec.find(
+        (x) =>
+          x.ingredient.id === data.ingredient.id &&
+          x.recipe.id === data.recipe.id
+      );
+
+      console.log("ingrec", ingrec);
 
       this.$buefy.modal.open({
         component: editIngredientRecipeModal,
         active: true,
         parent: this,
         props: {
-          ingrec: ingrec[0],
+          ingrec: ingrec,
           ingrecs: this.ingrec,
         },
       });
@@ -201,7 +207,7 @@ export default {
       var ingrec = this.ingrec.find(
         (x) => x.ingredient.id === i.id && x.recipe.id === r.id
       );
-      return ingrec.r_amount;
+      if (ingrec) return ingrec.r_amount;
     },
 
     recipeDetail(r) {

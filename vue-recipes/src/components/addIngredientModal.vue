@@ -96,11 +96,9 @@ export default {
         .post("/api/new-recipe-ingredient", payload)
         .then((response) => {
           if (response.data.ok) {
-            this.selectedItem.r_amount = this.amount;
             this.recipe.ingredients.push(this.selectedItem);
             this.$store.commit("addIngredientsRecipes", this.ingrec);
-            console.log("this.recipeeee", this.recipe);
-            this.$store.commit("updateRecipe", this.recipe);
+            this.$store.commit("setRecipe", this.recipes);
           }
         })
         .catch((error) => {

@@ -34,9 +34,7 @@ export default new Vuex.Store({
       state.isAuthenticated = false;
     },
 
-    //INGREDIENTS
     setIngredients(state, ingredients) {
-      console.log("in setIngredients STORE");
       state.ingredients = ingredients;
     },
 
@@ -44,9 +42,7 @@ export default new Vuex.Store({
       state.ingredients.push(ingredient);
     },
 
-    //RECIPES
     setRecipes(state, recipes) {
-      console.log("in setRecipes STORE");
       state.recipes = recipes;
     },
     addRecipe(state, recipe) {
@@ -61,6 +57,13 @@ export default new Vuex.Store({
       state.ingrec = ingrec;
     },
     addIngredientsRecipes(state, ingrec) {
+      state.ingrec.push(ingrec);
+    },
+    updateIngredientRecipe(state, ingrec) {
+      console.log("en update store");
+
+      const index = state.ingrec.indexOf(ingrec.id);
+      state.ingrec.splice(index, 1);
       state.ingrec.push(ingrec);
     },
   },
